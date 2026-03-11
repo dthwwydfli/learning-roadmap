@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intermediate Frontend Roadmap</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Cabinet+Grotesk:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #080810;
+  --surface: #0e0e1a;
+  --card: #13131f;
+  --border: #1c1c2e;
+  --border2: #252538;
+  --text: #dde1f0;
+  --muted: #5a5f7a;
+  --muted2: #3d4060;
+  --accent: #7c6af7;
+  --accent2: #5af0c4;
+  --js: #f7df1e;
+  --react: #61dafb;
+  --git: #f05032;
+  --npm: #cb3837;
+  --tailwind: #38bdf8;
+  --ai: #a78bfa;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--text); font-family:'Cabinet Grotesk',sans-serif; min-height:100vh; overflow-x:hidden; }
+
+/* BANNER */
+.banner { background:linear-gradient(90deg,rgba(124,106,247,.1),rgba(90,240,196,.06)); border-bottom:1px solid rgba(124,106,247,.18); padding:10px 20px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+.banner-left { display:flex; align-items:center; gap:8px; font-family:'DM Mono',monospace; font-size:11px; color:var(--muted); }
+.blink { width:6px; height:6px; border-radius:50%; background:var(--accent2); animation:blink 2s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.25} }
+.banner-link { display:flex; align-items:center; gap:7px; background:rgba(124,106,247,.1); border:1px solid rgba(124,106,247,.22); color:#b3acff; text-decoration:none; padding:6px 14px; border-radius:8px; font-size:12px; font-family:'DM Mono',monospace; transition:all .2s; }
+.banner-link:hover { background:rgba(124,106,247,.18); color:#d0ccff; }
+
+/* HERO */
+.hero { text-align:center; padding:48px 20px 0; }
+.eyebrow { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--muted); margin-bottom:12px; }
+.hero h1 { font-size:clamp(1.7rem,4vw,2.8rem); font-weight:800; color:#fff; line-height:1.15; margin-bottom:8px; }
+.hero h1 em { font-style:normal; background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.hero-sub { color:var(--muted); font-size:13px; margin-bottom:28px; }
+
+/* OVERALL PROGRESS */
+.op-wrap { max-width:420px; margin:0 auto 36px; background:var(--card); border:1px solid var(--border); border-radius:14px; padding:16px 20px; }
+.op-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:9px; }
+.op-label { font-size:11px; color:var(--muted); font-family:'DM Mono',monospace; }
+.op-pct { font-size:20px; font-weight:800; color:#fff; }
+.track { background:var(--border); border-radius:100px; height:5px; overflow:hidden; }
+.fill { height:100%; background:linear-gradient(90deg,var(--accent),var(--accent2)); border-radius:100px; transition:width .5s cubic-bezier(.4,0,.2,1); width:0%; }
+.op-sub { font-size:11px; color:var(--muted2); margin-top:7px; font-family:'DM Mono',monospace; }
+
+/* NAV */
+.nav-wrap { position:sticky; top:0; z-index:100; background:rgba(8,8,16,.93); backdrop-filter:blur(18px); border-bottom:1px solid var(--border); }
+.nav { display:flex; max-width:920px; margin:0 auto; overflow-x:auto; scrollbar-width:none; padding:0 12px; }
+.nav::-webkit-scrollbar { display:none; }
+.nav-btn { display:flex; align-items:center; gap:6px; padding:13px 14px; background:none; border:none; border-bottom:2px solid transparent; color:var(--muted); font-family:'Cabinet Grotesk',sans-serif; font-size:13px; font-weight:500; cursor:pointer; white-space:nowrap; flex-shrink:0; transition:all .2s; }
+.nav-btn:hover { color:var(--text); }
+.nav-btn.active { color:#fff; border-bottom-color:var(--accent); }
+.ndot { width:8px; height:8px; border-radius:3px; flex-shrink:0; }
+.nprog { font-family:'DM Mono',monospace; font-size:10px; color:var(--muted2); background:var(--border); padding:2px 5px; border-radius:4px; }
+
+/* PAGES */
+.page { display:none; max-width:860px; margin:0 auto; padding:30px 18px 80px; }
+.page.active { display:block; }
+
+/* PAGE HEADER */
+.phead { display:flex; align-items:flex-start; gap:14px; margin-bottom:24px; }
+.picon { width:50px; height:50px; border-radius:13px; display:flex; align-items:center; justify-content:center; font-size:22px; flex-shrink:0; }
+.ptitle { font-size:24px; font-weight:800; color:#fff; }
+.psub { font-size:12px; color:var(--muted); margin-top:3px; }
+.pstat { margin-left:auto; text-align:right; flex-shrink:0; }
+.pstat-n { font-size:22px; font-weight:800; color:#fff; }
+.pstat-l { font-size:10px; color:var(--muted); font-family:'DM Mono',monospace; }
+
+/* INFO BOX */
+.ibox { border-radius:11px; padding:14px 18px; margin-bottom:18px; display:flex; gap:12px; font-size:12.5px; line-height:1.6; }
+.ibox .ii { font-size:18px; flex-shrink:0; padding-top:1px; }
+.ibox .it { color:#94a3b8; }
+.ibox .it strong { color:var(--text); }
+.ibox.tip { background:rgba(124,106,247,.06); border:1px solid rgba(124,106,247,.14); }
+.ibox.warn { background:rgba(247,160,90,.06); border:1px solid rgba(247,160,90,.14); }
+.ibox.note { background:rgba(90,240,196,.05); border:1px solid rgba(90,240,196,.12); }
+
+/* WEEK */
+.week { background:var(--card); border:1px solid var(--border); border-radius:15px; margin-bottom:16px; overflow:hidden; transition:border-color .25s; }
+.week:hover { border-color:var(--border2); }
+.whead { display:flex; align-items:center; gap:12px; padding:16px 20px; cursor:pointer; user-select:none; border-bottom:1px solid var(--border); transition:background .15s; }
+.whead:hover { background:rgba(255,255,255,.015); }
+.wnum { font-family:'DM Mono',monospace; font-size:9.5px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); flex-shrink:0; width:50px; }
+.wtitle { font-size:14px; font-weight:700; color:#fff; flex:1; }
+.wdesc { font-size:11px; color:var(--muted); margin-top:2px; font-weight:400; }
+.wprog { font-family:'DM Mono',monospace; font-size:10px; color:var(--muted); flex-shrink:0; }
+.wchev { color:var(--muted2); font-size:11px; transition:transform .25s; flex-shrink:0; }
+.week.col .wchev { transform:rotate(-90deg); }
+.week.col .wbody { display:none; }
+.wmini { height:2px; background:var(--border); overflow:hidden; }
+.wmini-fill { height:100%; background:linear-gradient(90deg,var(--accent),var(--accent2)); transition:width .35s; }
+.wbody { padding:6px 0 10px; }
+
+/* CATEGORY */
+.clabel { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--muted2); padding:10px 20px 3px; }
+
+/* ITEM */
+.item { display:flex; align-items:flex-start; gap:11px; padding:9px 20px; cursor:pointer; border-radius:8px; margin:1px 7px; transition:background .12s; }
+.item:hover { background:rgba(255,255,255,.025); }
+.item.done { background:rgba(90,240,196,.04); }
+.cb { width:18px; height:18px; border-radius:5px; border:1.5px solid var(--border2); display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px; font-size:10px; color:transparent; transition:all .18s; }
+.item.done .cb { background:var(--accent2); border-color:var(--accent2); color:#092218; }
+.ib { flex:1; }
+.it { font-size:13px; font-weight:600; color:var(--text); line-height:1.35; }
+.item.done .it { color:var(--muted); text-decoration:line-through; text-decoration-color:var(--muted2); }
+.id { font-size:11px; color:var(--muted); margin-top:2px; line-height:1.45; }
+.item.done .id { color:var(--muted2); }
+.tag { font-size:10px; padding:2px 7px; border-radius:4px; font-family:'DM Mono',monospace; flex-shrink:0; align-self:flex-start; margin-top:2px; }
+.tc { background:rgba(90,95,122,.18); color:#7a8094; }
+.tk { background:rgba(247,160,90,.1); color:#f7a05a; border:1px solid rgba(247,160,90,.18); }
+.tp { background:rgba(90,240,196,.07); color:#5af0c4; border:1px solid rgba(90,240,196,.15); }
+.ta { background:rgba(167,139,250,.1); color:#c4b5fd; border:1px solid rgba(167,139,250,.18); }
+
+/* OVERVIEW */
+.ov-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:12px; margin-bottom:24px; }
+.ov-card { background:var(--card); border:1px solid var(--border); border-radius:13px; padding:16px; cursor:pointer; transition:all .2s; position:relative; overflow:hidden; }
+.ov-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; border-radius:13px 13px 0 0; }
+.ov-card:hover { border-color:var(--border2); transform:translateY(-2px); }
+.ov-top { display:flex; align-items:center; gap:9px; margin-bottom:10px; }
+.ov-name { font-size:14px; font-weight:700; color:#fff; }
+.ov-dur { font-size:11px; color:var(--muted); font-family:'DM Mono',monospace; margin-top:1px; }
+.ov-desc { font-size:12px; color:var(--muted); line-height:1.5; }
+.ov-pr { display:flex; align-items:center; gap:8px; margin-top:11px; }
+.ov-bar { flex:1; height:3px; background:var(--border); border-radius:100px; overflow:hidden; }
+.ov-bf { height:100%; border-radius:100px; transition:width .4s; }
+.ov-n { font-family:'DM Mono',monospace; font-size:10px; color:var(--muted); }
+
+/* TIMELINE */
+.tl { display:flex; gap:0; margin-bottom:24px; overflow-x:auto; padding-bottom:4px; }
+.tli { flex:1; min-width:75px; text-align:center; padding:0 3px; position:relative; }
+.tli::before { content:''; position:absolute; top:13px; left:0; right:0; height:2px; background:var(--border2); z-index:0; }
+.tli:first-child::before { left:50%; }
+.tli:last-child::before { right:50%; }
+.tldot { width:26px; height:26px; border-radius:50%; border:2px solid var(--border2); background:var(--card); margin:0 auto 7px; display:flex; align-items:center; justify-content:center; font-size:11px; position:relative; z-index:1; }
+.tlw { font-family:'DM Mono',monospace; font-size:9px; color:var(--muted); margin-bottom:2px; }
+.tlt { font-size:11px; font-weight:700; }
+
+/* EXT CARD */
+.ext { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:20px; margin-bottom:18px; }
+.ext h3 { font-size:15px; font-weight:700; color:#fff; margin-bottom:7px; }
+.ext p { font-size:12px; color:var(--muted); line-height:1.6; margin-bottom:13px; }
+.ext-link { display:inline-flex; align-items:center; gap:7px; background:rgba(124,106,247,.1); border:1px solid rgba(124,106,247,.25); color:#b3acff; text-decoration:none; padding:9px 16px; border-radius:9px; font-size:13px; font-weight:600; transition:all .2s; }
+.ext-link:hover { background:rgba(124,106,247,.18); }
+.sg { display:grid; grid-template-columns:repeat(auto-fill,minmax(175px,1fr)); gap:7px; margin-top:13px; }
+.sc { background:var(--surface); border:1px solid var(--border); border-radius:7px; padding:7px 11px; font-size:12px; color:var(--muted); display:flex; align-items:center; gap:7px; }
+.sc .d { width:6px; height:6px; border-radius:50%; flex-shrink:0; }
+
+/* COLORS */
+.cj { color:var(--js); } .cr { color:var(--react); } .cg { color:var(--git); } .cn { color:var(--npm); } .ct { color:var(--tailwind); } .ca { color:var(--ai); }
+.bgj { background:rgba(247,223,30,.1); } .bgr { background:rgba(97,218,251,.1); } .bgg { background:rgba(240,80,50,.1); } .bgn { background:rgba(203,56,55,.1); } .bgt { background:rgba(56,189,248,.1); } .bga { background:rgba(167,139,250,.1); }
+.baj { background:var(--js); } .bar { background:var(--react); } .bag { background:var(--git); } .ban { background:var(--npm); } .bat { background:var(--tailwind); } .baa { background:var(--ai); }
+.bdj::before { background:var(--js); } .bdr::before { background:var(--react); } .bdg::before { background:var(--git); } .bdn::before { background:var(--npm); } .bdt::before { background:var(--tailwind); } .bda::before { background:var(--ai); }
+</style>
+</head>
+<body>
+
+<div class="banner">
+  <div class="banner-left"><div class="blink"></div><span>Roadmap to Intermediate Frontend Dev · 2026</span></div>
+  <a href="https://roadmap.sh/frontend" target="_blank" class="banner-link">📍 roadmap.sh/frontend &nbsp;↗</a>
+</div>
+
+<div class="hero">
+  <p class="eyebrow">Your Learning Path</p>
+  <h1>Roadmap to <em>Intermediate</em> Frontend Dev</h1>
+  <p class="hero-sub">JavaScript · React · npm · Git · GitHub · AI Tools · Tailwind · ~10 weeks</p>
+  <div class="op-wrap">
+    <div class="op-top"><span class="op-label">overall progress</span><span class="op-pct" id="op-pct">0%</span></div>
+    <div class="track"><div class="fill" id="op-fill"></div></div>
+    <div class="op-sub" id="op-sub">0 of 0 tasks complete</div>
+  </div>
+</div>
+
+<div class="nav-wrap">
+  <nav class="nav">
+    <button class="nav-btn active" onclick="go('overview')">🗺️ Overview</button>
+    <button class="nav-btn" onclick="go('js')"><span class="ndot" style="background:var(--js)"></span>JavaScript<span class="nprog" id="np-js">0/0</span></button>
+    <button class="nav-btn" onclick="go('git')"><span class="ndot" style="background:var(--git)"></span>Git & GitHub<span class="nprog" id="np-git">0/0</span></button>
+    <button class="nav-btn" onclick="go('npm')"><span class="ndot" style="background:var(--npm)"></span>npm<span class="nprog" id="np-npm">0/0</span></button>
+    <button class="nav-btn" onclick="go('react')"><span class="ndot" style="background:var(--react)"></span>React<span class="nprog" id="np-react">0/0</span></button>
+    <button class="nav-btn" onclick="go('ai')"><span class="ndot" style="background:var(--ai)"></span>AI Tools<span class="nprog" id="np-ai">0/0</span></button>
+    <button class="nav-btn" onclick="go('tailwind')"><span class="ndot" style="background:var(--tailwind)"></span>Tailwind<span class="nprog" id="np-tailwind">0/0</span></button>
+  </nav>
+</div>
+
+<!-- ====== OVERVIEW ====== -->
+<div class="page active" id="page-overview">
+  <div class="phead">
+    <div class="picon" style="background:rgba(124,106,247,.12)">🗺️</div>
+    <div><div class="ptitle">The Full Plan</div><div class="psub">~10 weeks from JS to shipping the ASL project</div></div>
+  </div>
+  <div class="ibox note"><div class="ii">🎯</div><div class="it"><strong>Goal:</strong> Go from learning JavaScript at uni to shipping a real ASL sign language recognition app with React, TensorFlow.js, MediaPipe, and a live AI API. Everything on this roadmap feeds directly into that project.</div></div>
+
+  <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:10px;">Learning Timeline</div>
+  <div class="tl">
+    <div class="tli"><div class="tldot bgj"><span class="cj" style="font-size:10px">⚡</span></div><div class="tlw">W1–W4</div><div class="tlt cj">JavaScript</div></div>
+    <div class="tli"><div class="tldot bgg"><span class="cg" style="font-size:10px">🌿</span></div><div class="tlw">W2–W3</div><div class="tlt cg">Git+GH</div></div>
+    <div class="tli"><div class="tldot bgn"><span class="cn" style="font-size:10px">📦</span></div><div class="tlw">W4</div><div class="tlt cn">npm</div></div>
+    <div class="tli"><div class="tldot bgr"><span class="cr" style="font-size:10px">⚛️</span></div><div class="tlw">W5–W6</div><div class="tlt cr">React</div></div>
+    <div class="tli"><div class="tldot bga"><span class="ca" style="font-size:10px">🤖</span></div><div class="tlw">W5–W8</div><div class="tlt ca">AI Tools</div></div>
+    <div class="tli"><div class="tldot bgt"><span class="ct" style="font-size:10px">🎨</span></div><div class="tlw">W7–W8</div><div class="tlt ct">Tailwind</div></div>
+    <div class="tli"><div class="tldot" style="background:rgba(90,240,196,.1);border-color:var(--accent2)">🚀</div><div class="tlw">W9–W11</div><div class="tlt" style="color:var(--accent2)">ASL Project</div></div>
+  </div>
+
+  <div class="ov-grid">
+    <div class="ov-card bdj" onclick="go('js')"><div class="ov-top"><span style="font-size:18px">⚡</span><div><div class="ov-name cj">JavaScript</div><div class="ov-dur">Weeks 1–4 · Foundation</div></div></div><div class="ov-desc">Core language, DOM, async/await, ES6+. Everything else depends on this.</div><div class="ov-pr"><div class="ov-bar"><div class="ov-bf baj" id="ovf-js" style="width:0%"></div></div><div class="ov-n" id="ovn-js">0/0</div></div></div>
+    <div class="ov-card bdg" onclick="go('git')"><div class="ov-top"><span style="font-size:18px">🌿</span><div><div class="ov-name cg">Git & GitHub</div><div class="ov-dur">Weeks 2–3 · Parallel</div></div></div><div class="ov-desc">Version control and collaboration for the ASL project. Portfolio-ready repos.</div><div class="ov-pr"><div class="ov-bar"><div class="ov-bf bag" id="ovf-git" style="width:0%"></div></div><div class="ov-n" id="ovn-git">0/0</div></div></div>
+    <div class="ov-card bdn" onclick="go('npm')"><div class="ov-top"><span style="font-size:18px">📦</span><div><div class="ov-name cn">npm</div><div class="ov-dur">Week 4 · Quick win</div></div></div><div class="ov-desc">Package management. 3–4 days. You'll pick most of it up by using it in React.</div><div class="ov-pr"><div class="ov-bar"><div class="ov-bf ban" id="ovf-npm" style="width:0%"></div></div><div class="ov-n" id="ovn-npm">0/0</div></div></div>
+    <div class="ov-card bdr" onclick="go('react')"><div class="ov-top"><span style="font-size:18px">⚛️</span><div><div class="ov-name cr">React</div><div class="ov-dur">Weeks 5–6 · Main focus</div></div></div><div class="ov-desc">Components, hooks, state. Start the ASL project scaffold by end of week 5.</div><div class="ov-pr"><div class="ov-bar"><div class="ov-bf bar" id="ovf-react" style="width:0%"></div></div><div class="ov-n" id="ovn-react">0/0</div></div></div>
+    <div class="ov-card bda" onclick="go('ai')"><div class="ov-top"><span style="font-size:18px">🤖</span><div><div class="ov-name ca">AI Tools</div><div class="ov-dur">Weeks 5–8 · Ongoing</div></div></div><div class="ov-desc">Copilot, Claude, prompting techniques, and Anthropic API in the ASL project.</div><div class="ov-pr"><div class="ov-bar"><div class="ov-bf baa" id="ovf-ai" style="width:0%"></div></div><div class="ov-n" id="ovn-ai">0/0</div></div></div>
+    <div class="ov-card bdt" onclick="go('tailwind')"><div class="ov-top"><span style="font-size:18px">🎨</span><div><div class="ov-name ct">Tailwind CSS</div><div class="ov-dur">Weeks 7–8 · After React</div></div></div><div class="ov-desc">Utility-first styling for React. Deliberately delayed — learn React structure first.</div><div class="ov-pr"><div class="ov-bar"><div class="ov-bf bat" id="ovf-tailwind" style="width:0%"></div></div><div class="ov-n" id="ovn-tailwind">0/0</div></div></div>
+  </div>
+
+  <div class="ext">
+    <h3>📍 Full Frontend Roadmap Reference</h3>
+    <p>roadmap.sh is the definitive community-maintained guide. The skills below are what it marks as essential for an intermediate frontend developer — and exactly what this checklist covers.</p>
+    <a href="https://roadmap.sh/frontend" target="_blank" class="ext-link">Open roadmap.sh/frontend ↗</a>
+    <div class="sg">
+      <div class="sc"><div class="d" style="background:var(--js)"></div>HTML / CSS / JavaScript</div>
+      <div class="sc"><div class="d" style="background:var(--git)"></div>Git & Version Control</div>
+      <div class="sc"><div class="d" style="background:var(--react)"></div>React (framework)</div>
+      <div class="sc"><div class="d" style="background:var(--npm)"></div>Package Managers (npm)</div>
+      <div class="sc"><div class="d" style="background:var(--tailwind)"></div>CSS Frameworks / Tailwind</div>
+      <div class="sc"><div class="d" style="background:var(--ai)"></div>AI in Development</div>
+      <div class="sc"><div class="d" style="background:#94a3b8"></div>RESTful APIs / Fetch</div>
+      <div class="sc"><div class="d" style="background:#94a3b8"></div>Responsive Design</div>
+      <div class="sc"><div class="d" style="background:#94a3b8"></div>Browser DevTools</div>
+      <div class="sc"><div class="d" style="background:#94a3b8"></div>Testing & Debugging</div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== JAVASCRIPT ====== -->
+<div class="page" id="page-js">
+  <div class="phead"><div class="picon bgj">⚡</div><div><div class="ptitle cj">JavaScript</div><div class="psub">Weeks 1–4 · The foundation of everything</div></div><div class="pstat"><div class="pstat-n" id="ps-js">0%</div><div class="pstat-l">complete</div></div></div>
+  <div class="ibox tip"><div class="ii">💡</div><div class="it">You're already learning this at uni. Use these weeks to <strong>go deeper than the lectures</strong> — async and ES6+ are what separates beginners from developers who can use React confidently.</div></div>
+
+  <div class="week" id="wjs1">
+    <div class="whead" onclick="tw('wjs1')"><span class="wnum">Week 1</span><div><div class="wtitle">Core Language Fundamentals</div><div class="wdesc">Variables, types, control flow, functions, scope</div></div><span class="wprog" id="wp-wjs1">0/0</span><span class="wchev">▼</span></div>
+    <div class="wmini"><div class="wmini-fill" id="wf-wjs1" style="width:0%"></div></div>
+    <div class="wbody">
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Variables — var, let, const</div><div class="id">Scope differences, when to use each, temporal dead zone</div></div><span class="tag tc">core</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Data Types</div><div class="id">Strings, numbers, booleans, null, undefined — and typeof</div></div><span class="tag tc">core</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Operators & Expressions</div><div class="id">Arithmetic, == vs ===, logical (&&, ||, ??), ternary operator</div></div><span class="tag tc">core</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Control Flow</div><div class="id">if/else, switch, for, while, do...while, break/continue</div></div><span class="tag tc">core</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Functions — declarations, expressions, arrow functions</div><div class="id">Named functions, anonymous, hoisting, arrow syntax and 'this' differences</div></div><span class="tag tk">key</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Scope & Closures</div><div class="id">Global vs local, lexical scope, closure — why this matters in React hooks</div></div><span class="tag tk">key</span></div>
+    </div>
+  </div>
+
+  <div class="week" id="wjs2">
+    <div class="whead" onclick="tw('wjs2')"><span class="wnum">Week 2</span><div><div class="wtitle">Arrays, Objects & Modern ES6+</div><div class="wdesc">Data structures and syntax you'll use daily in React</div></div><span class="wprog" id="wp-wjs2">0/0</span><span class="wchev">▼</span></div>
+    <div class="wmini"><div class="wmini-fill" id="wf-wjs2" style="width:0%"></div></div>
+    <div class="wbody">
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Arrays — core methods</div><div class="id">push/pop, map, filter, reduce, find, forEach, some, every</div></div><span class="tag tk">key</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Objects — creation & access</div><div class="id">Key-value pairs, dot vs bracket notation, nested objects</div></div><span class="tag tc">core</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Destructuring</div><div class="id">Array and object destructuring — used constantly in React</div></div><span class="tag tk">key</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Spread & Rest Operators</div><div class="id">...spread to clone/merge arrays and objects, rest params in functions</div></div><span class="tag tk">key</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Template Literals</div><div class="id">Backtick strings, multi-line, ${} interpolation</div></div><span class="tag tc">core</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Optional chaining & nullish coalescing</div><div class="id">obj?.property to avoid crashes, ?? for defaults</div></div><span class="tag tk">key</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Modules — import / export</div><div class="id">Named exports, default exports, import syntax across files</div></div><span class="tag tc">core</span></div>
+    </div>
+  </div>
+
+  <div class="week" id="wjs3">
+    <div class="whead" onclick="tw('wjs3')"><span class="wnum">Week 3</span><div><div class="wtitle">Async JavaScript & the DOM</div><div class="wdesc">Fetch, Promises, async/await, DOM manipulation & events</div></div><span class="wprog" id="wp-wjs3">0/0</span><span class="wchev">▼</span></div>
+    <div class="wmini"><div class="wmini-fill" id="wf-wjs3" style="width:0%"></div></div>
+    <div class="wbody">
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">The Event Loop</div><div class="id">How JS runs code, why it's single-threaded, how async fits in</div></div><span class="tag tk">key</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Promises & .then()/.catch()</div><div class="id">Creating, chaining, catching errors</div></div><span class="tag tk">key</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">async / await</div><div class="id">Cleaner async syntax — you'll use this constantly for API calls</div></div><span class="tag tk">key</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">try / catch / finally</div><div class="id">Handling errors in async code, logging, user feedback</div></div><span class="tag tc">core</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Fetch API</div><div class="id">GET/POST requests, parsing JSON responses, handling errors</div></div><span class="tag tk">key</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">DOM Manipulation</div><div class="id">querySelector, createElement, classList, innerHTML, dataset</div></div><span class="tag tc">core</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Event Listeners</div><div class="id">addEventListener, event object, bubbling, event delegation</div></div><span class="tag tc">core</span></div>
+    </div>
+  </div>
+
+  <div class="week" id="wjs4">
+    <div class="whead" onclick="tw('wjs4')"><span class="wnum">Week 4</span><div><div class="wtitle">Consolidation & Project</div><div class="wdesc">Build something real before moving to React + npm</div></div><span class="wprog" id="wp-wjs4">0/0</span><span class="wchev">▼</span></div>
+    <div class="wmini"><div class="wmini-fill" id="wf-wjs4" style="width:0%"></div></div>
+    <div class="wbody">
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">OOP basics — classes & this</div><div class="id">Class syntax, constructor, methods, basic inheritance</div></div><span class="tag tc">core</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">JSON — parse and stringify</div><div class="id">Working with API data, config files, localStorage</div></div><span class="tag tc">core</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Browser DevTools</div><div class="id">Console, Sources debugger, Network tab, Elements inspector</div></div><span class="tag tk">key</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">🏗️ Build a vanilla JS project</div><div class="id">Quiz app, weather widget using a free API, or memory game</div></div><span class="tag tp">project</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Push project to GitHub with a README</div><div class="id">First real portfolio piece. Screenshot it, write a proper description.</div></div><span class="tag tp">project</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== GIT & GITHUB ====== -->
+<div class="page" id="page-git">
+  <div class="phead"><div class="picon bgg">🌿</div><div><div class="ptitle cg">Git & GitHub</div><div class="psub">Weeks 2–3 · Learn in parallel with JavaScript</div></div><div class="pstat"><div class="pstat-n" id="ps-git">0%</div><div class="pstat-l">complete</div></div></div>
+  <div class="ibox warn"><div class="ii">⚡</div><div class="it"><strong>Start in Week 2 of JS, not after.</strong> Git takes 2–3 days to get comfortable and you'll need it before the React + ASL project with your collaborator. Merge conflicts are inevitable — better to learn now.</div></div>
+
+  <div class="week" id="wgit1">
+    <div class="whead" onclick="tw('wgit1')"><span class="wnum">Week 2</span><div><div class="wtitle">Git Fundamentals</div><div class="wdesc">Local version control — tracking, branching, merging</div></div><span class="wprog" id="wp-wgit1">0/0</span><span class="wchev">▼</span></div>
+    <div class="wmini"><div class="wmini-fill" id="wf-wgit1" style="width:0%"></div></div>
+    <div class="wbody">
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">What is version control & why Git</div><div class="id">Tracking file history, avoiding "final_v3_REAL.zip" disasters</div></div><span class="tag tc">core</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">git init & git clone</div><div class="id">Initialising a local repo vs cloning a remote one</div></div><span class="tag tc">core</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">git add, commit, status, log</div><div class="id">The daily workflow. Write meaningful commit messages.</div></div><span class="tag tk">key</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">.gitignore</div><div class="id">Exclude node_modules, .env files, OS files from commits</div></div><span class="tag tc">core</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Branches — create, switch, delete</div><div class="id">git branch, git checkout -b, git switch</div></div><span class="tag tk">key</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">git merge & resolving conflicts</div><div class="id">Merging feature branches, reading conflict markers, choosing correct code</div></div><span class="tag tk">key</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">git stash</div><div class="id">Temporarily shelving unfinished work</div></div><span class="tag tc">core</span></div>
+    </div>
+  </div>
+
+  <div class="week" id="wgit2">
+    <div class="whead" onclick="tw('wgit2')"><span class="wnum">Week 3</span><div><div class="wtitle">GitHub & Collaboration</div><div class="wdesc">Remote repos, pull requests, portfolio setup</div></div><span class="wprog" id="wp-wgit2">0/0</span><span class="wchev">▼</span></div>
+    <div class="wmini"><div class="wmini-fill" id="wf-wgit2" style="width:0%"></div></div>
+    <div class="wbody">
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Push local project to GitHub</div><div class="id">git remote add origin, git push -u origin main</div></div><span class="tag tc">core</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Pull Requests (PRs)</div><div class="id">Open, review, and merge PRs — critical for the ASL project collaboration</div></div><span class="tag tk">key</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">git pull & fetch</div><div class="id">Syncing with remote, understanding the difference between the two</div></div><span class="tag tc">core</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">GitHub Issues & Project Board</div><div class="id">Track tasks and bugs for the ASL project collaboratively</div></div><span class="tag tc">core</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Write a proper README.md</div><div class="id">Project title, description, install steps, tech stack, screenshots</div></div><span class="tag tk">key</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">GitHub Pages — deploy a static site</div><div class="id">Free hosting. Live demos on your CV make a huge difference to recruiters.</div></div><span class="tag tp">project</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Pin 3 best repos on your GitHub profile</div><div class="id">Recruiters look at this. Curate it intentionally.</div></div><span class="tag tp">project</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== NPM ====== -->
+<div class="page" id="page-npm">
+  <div class="phead"><div class="picon bgn">📦</div><div><div class="ptitle cn">npm</div><div class="psub">Week 4 · 3–4 days, learn by doing</div></div><div class="pstat"><div class="pstat-n" id="ps-npm">0%</div><div class="pstat-l">complete</div></div></div>
+  <div class="ibox note"><div class="ii">📦</div><div class="it"><strong>npm is a quick win.</strong> You don't really "study" it in isolation — you learn it by setting up your first Vite + React project. These topics take 3–4 days and you'll keep reinforcing them throughout React and the ASL project.</div></div>
+
+  <div class="week" id="wnpm1">
+    <div class="whead" onclick="tw('wnpm1')"><span class="wnum">Week 4</span><div><div class="wtitle">npm Essentials</div><div class="wdesc">Everything you need to manage packages in your projects</div></div><span class="wprog" id="wp-wnpm1">0/0</span><span class="wchev">▼</span></div>
+    <div class="wmini"><div class="wmini-fill" id="wf-wnpm1" style="width:0%"></div></div>
+    <div class="wbody">
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">What npm is and why it exists</div><div class="id">Package registry, managing dependencies, vs loading from CDN</div></div><span class="tag tc">core</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">npm init & package.json</div><div class="id">Fields: name, version, scripts, dependencies, devDependencies</div></div><span class="tag tc">core</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">npm install</div><div class="id">Installing packages, --save-dev flag, what node_modules actually is</div></div><span class="tag tk">key</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">npm scripts</div><div class="id">npm start, npm run dev, npm run build — custom task shortcuts</div></div><span class="tag tk">key</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">package-lock.json</div><div class="id">Locks exact versions — always commit this to git</div></div><span class="tag tc">core</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">dependencies vs devDependencies</div><div class="id">Runtime packages vs dev-only tools like linters and test runners</div></div><span class="tag tc">core</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">🏗️ Scaffold a Vite + React project</div><div class="id">npm create vite@latest — your first real npm workflow in practice</div></div><span class="tag tp">project</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== REACT ====== -->
+<div class="page" id="page-react">
+  <div class="phead"><div class="picon bgr">⚛️</div><div><div class="ptitle cr">React</div><div class="psub">Weeks 5–6 · The main event</div></div><div class="pstat"><div class="pstat-n" id="ps-react">0%</div><div class="pstat-l">complete</div></div></div>
+  <div class="ibox tip"><div class="ii">⚛️</div><div class="it"><strong>Two weeks is the right call.</strong> Week 5 = core concepts + a small practice app. Week 6 = intermediate hooks + <strong>scaffold the actual ASL project</strong>. Don't wait until you feel "ready" — learning inside a real project is how React sticks.</div></div>
+
+  <div class="week" id="wrct1">
+    <div class="whead" onclick="tw('wrct1')"><span class="wnum">Week 5</span><div><div class="wtitle">Core React Concepts</div><div class="wdesc">Components, JSX, props, state — the mental model shift</div></div><span class="wprog" id="wp-wrct1">0/0</span><span class="wchev">▼</span></div>
+    <div class="wmini"><div class="wmini-fill" id="wf-wrct1" style="width:0%"></div></div>
+    <div class="wbody">
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">What React is & the component model</div><div class="id">Virtual DOM, declarative UI, why it exists over vanilla JS</div></div><span class="tag tc">core</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Vite + React project setup</div><div class="id">npm create vite@latest, file structure, running dev server</div></div><span class="tag tc">core</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">JSX syntax</div><div class="id">HTML-in-JS, className not class, curly braces, self-closing tags</div></div><span class="tag tc">core</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Functional Components</div><div class="id">Writing and composing reusable UI components</div></div><span class="tag tc">core</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Props</div><div class="id">Passing data into components, default props, children prop</div></div><span class="tag tk">key</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">useState Hook</div><div class="id">Local state, setter function, how re-renders work</div></div><span class="tag tk">key</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Events in React</div><div class="id">onClick, onChange, onSubmit — React synthetic event system</div></div><span class="tag tc">core</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Conditional Rendering</div><div class="id">&amp;&amp;, ternary, show/hide components based on state</div></div><span class="tag tc">core</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Rendering Lists with .map() & keys</div><div class="id">Why keys matter, rendering arrays of components</div></div><span class="tag tc">core</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">🏗️ Build: small React practice app</div><div class="id">Counter, colour picker, or todo — something with state. Deploy to GitHub Pages.</div></div><span class="tag tp">project</span></div>
+    </div>
+  </div>
+
+  <div class="week" id="wrct2">
+    <div class="whead" onclick="tw('wrct2')"><span class="wnum">Week 6</span><div><div class="wtitle">Intermediate Hooks + Start ASL Project</div><div class="wdesc">useEffect, useRef, data fetching — then scaffold the real project</div></div><span class="wprog" id="wp-wrct2">0/0</span><span class="wchev">▼</span></div>
+    <div class="wmini"><div class="wmini-fill" id="wf-wrct2" style="width:0%"></div></div>
+    <div class="wbody">
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">useEffect Hook</div><div class="id">Side effects, dependency array, cleanup function — understand this deeply</div></div><span class="tag tk">key</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">useRef Hook</div><div class="id">Direct DOM access — essential for webcam + TensorFlow.js in the ASL project</div></div><span class="tag tk">key</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Fetching data in React</div><div class="id">useEffect + fetch, loading/error states, displaying async data</div></div><span class="tag tk">key</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Lifting State Up</div><div class="id">Sharing state between sibling components via a parent</div></div><span class="tag tc">core</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Forms in React (controlled inputs)</div><div class="id">Controlled vs uncontrolled, form state, handling submission</div></div><span class="tag tc">core</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">React Router basics</div><div class="id">BrowserRouter, Route, Link — multiple pages in one app</div></div><span class="tag tc">core</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">🚀 Scaffold the ASL project in React</div><div class="id">Create the repo, set up Vite, plan component structure with your partner</div></div><span class="tag tp">project</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== AI TOOLS ====== -->
+<div class="page" id="page-ai">
+  <div class="phead"><div class="picon bga">🤖</div><div><div class="ptitle ca">AI Tools & Integration</div><div class="psub">Weeks 5–8 · Ongoing alongside React and the ASL project</div></div><div class="pstat"><div class="pstat-n" id="ps-ai">0%</div><div class="pstat-l">complete</div></div></div>
+  <div class="ibox tip"><div class="ii">🤖</div><div class="it"><strong>This is on the roadmap.sh frontend path now.</strong> Being able to discuss how you used AI tools critically during the ASL project — not just blindly copy-pasting — is a real differentiator in 2026 interviews. Interviewers want to know you can use it and evaluate it.</div></div>
+
+  <div class="week" id="wai1">
+    <div class="whead" onclick="tw('wai1')"><span class="wnum">Week 5</span><div><div class="wtitle">AI-Assisted Coding</div><div class="wdesc">Copilot, Claude, and Cursor — using them effectively while learning</div></div><span class="wprog" id="wp-wai1">0/0</span><span class="wchev">▼</span></div>
+    <div class="wmini"><div class="wmini-fill" id="wf-wai1" style="width:0%"></div></div>
+    <div class="wbody">
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">How LLMs work (basic mental model)</div><div class="id">Token prediction, not "thinking" — why it hallucinates, why context matters</div></div><span class="tag tc">core</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">AI vs Traditional Coding</div><div class="id">What AI speeds up (boilerplate, syntax) vs what it can't replace (architecture decisions)</div></div><span class="tag tc">core</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">GitHub Copilot in VS Code</div><div class="id">Tab completion, inline suggestions, chat panel — set it up, learn the shortcuts</div></div><span class="tag ta">ai tool</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Using Claude for code review</div><div class="id">Paste your code, ask "what's wrong with this?" — learn from the explanation</div></div><span class="tag ta">ai tool</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">When NOT to trust AI output</div><div class="id">Spot hallucinated APIs, outdated syntax, wrong logic. Always verify output yourself.</div></div><span class="tag tk">key</span></div>
+    </div>
+  </div>
+
+  <div class="week" id="wai2">
+    <div class="whead" onclick="tw('wai2')"><span class="wnum">Weeks 6–7</span><div><div class="wtitle">Prompting Techniques</div><div class="wdesc">Getting consistently useful output from AI assistants</div></div><span class="wprog" id="wp-wai2">0/0</span><span class="wchev">▼</span></div>
+    <div class="wmini"><div class="wmini-fill" id="wf-wai2" style="width:0%"></div></div>
+    <div class="wbody">
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Role prompting</div><div class="id">"Act as a senior React developer reviewing my code" — sets context, improves quality</div></div><span class="tag ta">prompting</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Prompting for debugging</div><div class="id">"Here's my error + full code. What's the likely cause?" — structured bug reports</div></div><span class="tag tk">key</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Chain-of-thought prompting</div><div class="id">"Think step by step before answering" — better for complex architectural questions</div></div><span class="tag ta">prompting</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Iterating on AI output</div><div class="id">"That's close but change X" — treat it like a conversation, not a search engine</div></div><span class="tag tk">key</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Using AI for code review & refactoring</div><div class="id">Ask for a code review, ask "how would a senior dev improve this?"</div></div><span class="tag ta">ai tool</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Using AI for docs generation</div><div class="id">Get Claude to write JSDoc comments and README sections for your projects</div></div><span class="tag ta">ai tool</span></div>
+    </div>
+  </div>
+
+  <div class="week" id="wai3">
+    <div class="whead" onclick="tw('wai3')"><span class="wnum">Week 8</span><div><div class="wtitle">Implementing AI in the ASL Project</div><div class="wdesc">Integrating the Anthropic API to add real AI features</div></div><span class="wprog" id="wp-wai3">0/0</span><span class="wchev">▼</span></div>
+    <div class="wmini"><div class="wmini-fill" id="wf-wai3" style="width:0%"></div></div>
+    <div class="wbody">
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Anthropic API basics</div><div class="id">Get an API key, understand the /v1/messages endpoint, read the docs</div></div><span class="tag ta">ai tool</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Call the API from a React app</div><div class="id">fetch() to Anthropic endpoint, parse response, display result in UI</div></div><span class="tag tk">key</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Feature: ASL sentence builder</div><div class="id">Detected signs → API → returns a natural language sentence. Strong portfolio feature.</div></div><span class="tag tp">project</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Feature: signing feedback assistant</div><div class="id">Confidence scores → API → "Your B looks like P, try adjusting your thumb position"</div></div><span class="tag tp">project</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Document your AI usage for interviews</div><div class="id">Note: what tools you used, how you caught mistakes, what you decided not to use it for</div></div><span class="tag tk">key</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== TAILWIND ====== -->
+<div class="page" id="page-tailwind">
+  <div class="phead"><div class="picon bgt">🎨</div><div><div class="ptitle ct">Tailwind CSS</div><div class="psub">Weeks 7–8 · After you're comfortable with React</div></div><div class="pstat"><div class="pstat-n" id="ps-tailwind">0%</div><div class="pstat-l">complete</div></div></div>
+  <div class="ibox warn"><div class="ii">⏱️</div><div class="it"><strong>Deliberately delayed to Week 7.</strong> Learning Tailwind before you understand React component structure creates confusion about what's React and what's CSS. Two weeks into React this will click immediately — and you'll style the ASL project UI fast.</div></div>
+
+  <div class="week" id="wtw1">
+    <div class="whead" onclick="tw('wtw1')"><span class="wnum">Week 7</span><div><div class="wtitle">Tailwind Fundamentals</div><div class="wdesc">Utility-first CSS — layout, spacing, typography, colour</div></div><span class="wprog" id="wp-wtw1">0/0</span><span class="wchev">▼</span></div>
+    <div class="wmini"><div class="wmini-fill" id="wf-wtw1" style="width:0%"></div></div>
+    <div class="wbody">
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">What utility-first CSS means</div><div class="id">Why Tailwind vs writing BEM/module CSS — and when each makes sense</div></div><span class="tag tc">core</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Install Tailwind in Vite + React</div><div class="id">npm install, tailwind.config.js, @tailwind directives in CSS entry file</div></div><span class="tag tc">core</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Layout — flex & grid utilities</div><div class="id">flex, grid, gap, justify-, items-, col-span — replaces most layout CSS</div></div><span class="tag tk">key</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Spacing, sizing & borders</div><div class="id">p-, m-, w-, h-, rounded-, border- utility classes</div></div><span class="tag tc">core</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Typography & colour</div><div class="id">text-lg, font-bold, text-gray-500, bg-blue-600 — the full Tailwind palette</div></div><span class="tag tc">core</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Responsive breakpoints</div><div class="id">sm:, md:, lg:, xl: prefixes — mobile-first by default</div></div><span class="tag tk">key</span></div>
+    </div>
+  </div>
+
+  <div class="week" id="wtw2">
+    <div class="whead" onclick="tw('wtw2')"><span class="wnum">Week 8</span><div><div class="wtitle">Intermediate Tailwind + Apply to ASL</div><div class="wdesc">State variants, dark mode, and styling your real components</div></div><span class="wprog" id="wp-wtw2">0/0</span><span class="wchev">▼</span></div>
+    <div class="wmini"><div class="wmini-fill" id="wf-wtw2" style="width:0%"></div></div>
+    <div class="wbody">
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Hover, focus & active state variants</div><div class="id">hover:bg-blue-700, focus:ring, active:scale-95 etc</div></div><span class="tag tc">core</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Dark mode</div><div class="id">dark: prefix, class-based toggle in React</div></div><span class="tag tc">core</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Custom values in tailwind.config</div><div class="id">Extending the theme with custom colours, fonts, spacing tokens</div></div><span class="tag tc">core</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">Tailwind + React patterns</div><div class="id">className conditionals with template literals or the clsx library</div></div><span class="tag tk">key</span></div>
+      <div class="item" onclick="tick(this)"><div class="cb">✓</div><div class="ib"><div class="it">🎨 Restyle the ASL project UI with Tailwind</div><div class="id">Replace all inline/module CSS with Tailwind classes. Big quality jump.</div></div><span class="tag tp">project</span></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const SK = 'rm-v3';
+const pages = ['overview','js','git','npm','react','ai','tailwind'];
+const secs = ['js','git','npm','react','ai','tailwind'];
+const weeks = ['wjs1','wjs2','wjs3','wjs4','wgit1','wgit2','wnpm1','wrct1','wrct2','wai1','wai2','wai3','wtw1','wtw2'];
+const secWeeks = { js:['wjs1','wjs2','wjs3','wjs4'], git:['wgit1','wgit2'], npm:['wnpm1'], react:['wrct1','wrct2'], ai:['wai1','wai2','wai3'], tailwind:['wtw1','wtw2'] };
+
+let idC = 0;
+document.querySelectorAll('.item').forEach(el => { el.dataset.id = 'i'+(idC++); });
+
+function tick(el) { el.classList.toggle('done'); upd(); save(); }
+function tw(id) { document.getElementById(id).classList.toggle('col'); }
+
+function go(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  document.querySelectorAll('.nav-btn')[pages.indexOf(name)].classList.add('active');
+  window.scrollTo({ top: document.querySelector('.nav-wrap').offsetTop - 8, behavior:'smooth' });
+}
+
+function upd() {
+  let gt = 0, gd = 0;
+  secs.forEach(s => {
+    const pg = document.getElementById('page-'+s);
+    const t = pg.querySelectorAll('.item').length;
+    const d = pg.querySelectorAll('.item.done').length;
+    const pct = t ? Math.round(d/t*100) : 0;
+    document.getElementById('np-'+s).textContent = d+'/'+t;
+    const ps = document.getElementById('ps-'+s);
+    if(ps) ps.textContent = pct+'%';
+    const of = document.getElementById('ovf-'+s);
+    if(of) { of.style.width = pct+'%'; document.getElementById('ovn-'+s).textContent = d+'/'+t; }
+    gt += t; gd += d;
+  });
+  weeks.forEach(wid => {
+    const w = document.getElementById(wid);
+    if(!w) return;
+    const t = w.querySelectorAll('.item').length;
+    const d = w.querySelectorAll('.item.done').length;
+    const pct = t ? Math.round(d/t*100) : 0;
+    const wp = document.getElementById('wp-'+wid);
+    if(wp) wp.textContent = d+'/'+t;
+    const wf = document.getElementById('wf-'+wid);
+    if(wf) wf.style.width = pct+'%';
+  });
+  const gp = gt ? Math.round(gd/gt*100) : 0;
+  document.getElementById('op-pct').textContent = gp+'%';
+  document.getElementById('op-fill').style.width = gp+'%';
+  document.getElementById('op-sub').textContent = gd+' of '+gt+' tasks complete';
+}
+
+function save() {
+  const d = [];
+  document.querySelectorAll('.item.done').forEach(el => d.push(el.dataset.id));
+  localStorage.setItem(SK, JSON.stringify(d));
+}
+
+function load() {
+  try {
+    JSON.parse(localStorage.getItem(SK)||'[]').forEach(id => {
+      const el = document.querySelector('[data-id="'+id+'"]');
+      if(el) el.classList.add('done');
+    });
+  } catch(e){}
+}
+
+load(); upd();
+</script>
+</body>
+</html>
